@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 14 01:11:24 2023
+Created on Sun Apr 23 01:25:20 2023
 
-@author: Memre
+@author: abhinav.kumar
 """
 
 from dash import html, dcc
@@ -41,7 +41,7 @@ data_page1 = dmc.Container(
                                                     style={
                                                         'lineHeight': '30px','borderWidth': '1px','borderStyle': 'dashed',
                                                         'borderRadius': '3px','borderColor':'rgba(0,0,0,0.3)','textAlign': 'center','margin': '5px',
-                                                        'padding':'20px', 'backgroundColor':'black'
+                                                        'padding':'20px', 'backgroundColor':'white'
                                                     },
                                                     children=[
                                                         dmc.Stack(
@@ -102,23 +102,23 @@ data_page1 = dmc.Container(
                                                             md=4,
                                                             children=[
                                                                 dmc.Card(
-                                                                    style={'backgroundColor': 'transparent'},
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/customer.jpg",
+                                                                                src="assets/image/soil.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Customer Data'
+                                                                                'Soil Mineral Content Across Different Districts of India'
                                                                             ]
                                                                         ),
-                                                                        dmc.Button('Get Data', mt=10,
+                                                                        dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='customer-data', variant='gradient', size='xs')                                                                    ]
+                                                                                   id='soil-mineral', variant='gradient', size='xs')
+                                                                    ]
                                                                 ),
                                                             ]
                                                         ),
@@ -127,27 +127,51 @@ data_page1 = dmc.Container(
                                                             md=4,
                                                             children=[
                                                                 dmc.Card(
-                                                                    style={'backgroundColor': 'transparent'},
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/creditcard.jpg",
+                                                                                src="assets/image/literacy.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Credit Card Data'
+                                                                                'Literacy Rate Across Different Districts of India'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='creditcard-data', variant='gradient', size='xs')
+                                                                                   id='literacy-india', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
                                                         ),
+                                                        dmc.Col(
+                                                            span=12,
+                                                            md=4,
+                                                            children=[
+                                                                dmc.Card(
+                                                                    children=[
+                                                                        dmc.CardSection(
+                                                                            dmc.Image(
+                                                                                src="assets/image/hate.jpg",
+                                                                                height=160,
+                                                                            )
+                                                                        ),
+                                                                        dmc.Text(
+                                                                            mt=10,
+                                                                            children=[
+                                                                                'Hate and Crime Across Different Districts of India'
+                                                                            ]
+                                                                        ),
+                                                                        dmc.Button('Get Data',mt=10,
+                                                                                   leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
+                                                                                   id='hatecrime-india', variant='gradient', size='xs')
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        )
                                                     ]
                                                 ),
                                                 dmc.Alert( title="Success!", color="green", id='alert-check2',
@@ -517,7 +541,6 @@ data_page3=dmc.Container(
                                         ),
                                         dmc.Select(
                                             style={'marginTop':'20px'},
-                                            label='Scalling Type',
                                             description='Scalling Type',
                                             data=["Standardization", "Normalization"],
                                             searchable=True,

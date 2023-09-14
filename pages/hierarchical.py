@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Apr 27 00:20:29 2023
+Created on Mon May  1 22:49:33 2023
 
 @author: abhinav.kumar
 """
@@ -16,9 +16,9 @@ import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
 import plotly.express as px
-from helping_pages.dbscan_hp import data_page1, data_page2, data_page3, data_page4
-from helping_functions.kmean_fx import get_data_initial, create_table, getheatmap,gethistogram,gethist2d_fig, getscatter_fig, getboxplot, getscatterplot, get3dscatterplot
-from helping_functions.dbscan_fx import get_db_cluster, getfeature_importance
+from helping_pages.hierarchical_hp import data_page1, data_page2, data_page3, data_page4
+from helping_functions.kmean_fx import get_data_initial, create_table, getheatmap,gethistogram,gethist2d_fig, getscatter_fig, getboxplot, getscatterplot, get3dscatterplot, getfeature_importance
+from helping_functions.hierarchical_fx import get_dendrogram, get_hierarchical_cluster
 
 dash.register_page(__name__)
 
@@ -31,9 +31,9 @@ layout = html.Div([
             style={'backgroundColor':'whitesmoke','marginTop':'0.2rem','padding':'1rem',
                    'minHeight':'100vh', 'maxWidth':'1200px'},
             children=[
-                dcc.Store(id='used-data-ml2', data=None, storage_type='session'),
+                dcc.Store(id='used-data-ml3', data=None, storage_type='session'),
                 dmc.Stepper(
-                    id="stepper-basic-usage-ml2",
+                    id="stepper-basic-usage-ml3",
                     active=active2,
                     size='xs',
                     contentPadding=1,
@@ -48,7 +48,7 @@ layout = html.Div([
                         dmc.StepperStep(
                             label="Second step",
                             description="Data Cleaning",
-                            id='step2-ml2',
+                            id='step2-ml3',
                             children=data_page2
                         ),
                         dmc.StepperStep(
@@ -70,10 +70,10 @@ layout = html.Div([
                                 dmc.Center(
                                     style={'marginTop':'20px'},
                                     children=[
-                                        dmc.Button("Download xlsx", id="btn_xslx-ml2",
+                                        dmc.Button("Download xlsx", id="btn_xslx-ml3",
                                                leftIcon=DashIconify(icon="material-symbols:download-rounded"),
                                                style={'width':'200px', 'margin':'auto'}),
-                                        dcc.Download(id="download_xslx-ml2")
+                                        dcc.Download(id="download_xslx-ml3")
                                     ]   
                                 )
                             ]
@@ -85,13 +85,13 @@ layout = html.Div([
                     mt="xl",
                     children=[
                         html.Div(
-                            dmc.Button("Back", id="back-kmean-ml2", variant="default",leftIcon=DashIconify(icon="material-symbols:arrow-back")),
-                            id='back-div-ml2',
+                            dmc.Button("Back", id="back-kmean-ml3", variant="default",leftIcon=DashIconify(icon="material-symbols:arrow-back")),
+                            id='back-div-ml3',
                             hidden=False
                         ),
                         html.Div(
-                            dmc.Button("Next step", id="next-kmean-ml2",variant='gradient', rightIcon=DashIconify(icon="material-symbols:arrow-forward")),
-                            id='next-div-ml2',
+                            dmc.Button("Next step", id="next-kmean-ml3",variant='gradient', rightIcon=DashIconify(icon="material-symbols:arrow-forward")),
+                            id='next-div-ml3',
                             hidden=False
                         )
                     ],
@@ -111,13 +111,13 @@ dash.clientside_callback(
         var ctx = dash_clientside.callback_context;
         if (ctx.triggered.length > 0) {
             var prop_id = ctx.triggered[0]['prop_id'];
-            if (prop_id === 'back-kmean-ml2.n_clicks') {
+            if (prop_id === 'back-kmean-ml3.n_clicks') {
                 if(state > 0){
                 return state - 1;
                 } else {
                     return state
                 }
-            } else if (prop_id === 'next-kmean-ml2.n_clicks') {
+            } else if (prop_id === 'next-kmean-ml3.n_clicks') {
                 if(state < 4){
                     return state + 1;
                 } else {
@@ -128,10 +128,10 @@ dash.clientside_callback(
         return "";
     }
     """,
-    Output("stepper-basic-usage-ml2", "active"),
-    Input("back-kmean-ml2", "n_clicks"),
-    Input("next-kmean-ml2", "n_clicks"),
-    State("stepper-basic-usage-ml2", "active"),
+    Output("stepper-basic-usage-ml3", "active"),
+    Input("back-kmean-ml3", "n_clicks"),
+    Input("next-kmean-ml3", "n_clicks"),
+    State("stepper-basic-usage-ml3", "active"),
     prevent_initial_call=True
 )
                 
@@ -148,29 +148,29 @@ dash.clientside_callback(
         }
     }
     """,
-    Output("next-div-ml2", "hidden"),
-    Output('back-div-ml2', 'hidden'),
-    Input("stepper-basic-usage-ml2", "active")
+    Output("next-div-ml3", "hidden"),
+    Output('back-div-ml3', 'hidden'),
+    Input("stepper-basic-usage-ml3", "active")
 )
                  
                     
 
 #CB3 -  uploading table and storing
-@dash.callback(Output('alert-check-ml2', 'hide'),Output('alert-check-ml2', 'color'),Output('alert-check-ml2', 'title'),Output('alert-check-ml2', 'children'),
-              Output('alert-check2-ml2', 'hide'),Output('alert-check2-ml2', 'color'),Output('alert-check2-ml2', 'title'),Output('alert-check2-ml2', 'children'),
-              Output('check1-ml2', 'value'),Output('table-data-ml2', 'children'),Output('table-data2-ml2', 'children'),
-              Output('used-data-ml2', 'data', allow_duplicate=True),
-              Input('upload-data-ml2', 'contents'),
-              Input('soil-mineral-ml2', 'n_clicks'),
-              Input('literacy-india-ml2','n_clicks'),
-              Input('hatecrime-india-ml2', 'n_clicks'),
-              State('upload-data-ml2', 'filename'),
+@dash.callback(Output('alert-check-ml3', 'hide'),Output('alert-check-ml3', 'color'),Output('alert-check-ml3', 'title'),Output('alert-check-ml3', 'children'),
+              Output('alert-check2-ml3', 'hide'),Output('alert-check2-ml3', 'color'),Output('alert-check2-ml3', 'title'),Output('alert-check2-ml3', 'children'),
+              Output('check1-ml3', 'value'),Output('table-data-ml3', 'children'),Output('table-data2-ml3', 'children'),
+              Output('used-data-ml3', 'data', allow_duplicate=True),
+              Input('upload-data-ml3', 'contents'),
+              Input('soil-mineral-ml3', 'n_clicks'),
+              Input('literacy-india-ml3','n_clicks'),
+              Input('hatecrime-india-ml3', 'n_clicks'),
+              State('upload-data-ml3', 'filename'),
               prevent_initial_call=True
 )
 def update_output2(contents, soil, literacy, hate, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    if input_id == 'upload-data-ml2':
+    if input_id == 'upload-data-ml3':
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
         message = ""
@@ -190,17 +190,17 @@ def update_output2(contents, soil, literacy, hate, filename):
             return False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",no_update,no_update,no_update,no_update,'check', val, no_update, store_data
         else:
             return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
-    elif input_id =='soil-mineral-ml2':
+    elif input_id =='soil-mineral-ml3':
             df = pd.read_csv('assets/data/soil.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'literacy-india-ml2':
+    elif input_id == 'literacy-india-ml3':
             df = pd.read_csv('assets/data/literacy.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'hatecrime-india-ml2':
+    elif input_id == 'hatecrime-india-ml3':
             df = pd.read_csv('assets/data/hate_crime.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
@@ -215,7 +215,7 @@ dash.clientside_callback(
     function update_dropdown(clicks1, clicks2,active, data) {
         var ctx = dash_clientside.callback_context;
         var prop_id = ctx.triggered[0]['prop_id'];
-        if ((prop_id === 'next-kmean-ml2.n_clicks' && active === 0) || (prop_id === 'back-kmean-ml2.n_clicks' && active === 2)) {
+        if ((prop_id === 'next-kmean-ml3.n_clicks' && active === 0) || (prop_id === 'back-kmean-ml3.n_clicks' && active === 2)) {
             var column_data = data.available_column.map(obj => obj.column)
             //console.log(column_data);
             var column_val = data.available_column_val.map(obj => obj.column_val)
@@ -229,44 +229,44 @@ dash.clientside_callback(
         }
     }
     """,
-    Output('column-select-ml2', 'data'),
-    Output('column-select-ml2', 'value'),
-    Output('row-select-ml2', 'data'),
-    Output('row-select-ml2', 'value'),
-    Output('heatmap-columns-ml2', 'data'),
-    Output('heatmap-columns-ml2', 'value'),
-    Output('histogram-columns-ml2', 'data'),
-    Output('histogram-columns-ml2', 'value'),
-    Output('hist2d-columns-ml2', 'data'),
-    Output('hist2d-columns-ml2', 'value'),
-    Output('scatter-matrix-columns-ml2', 'data'),
-    Output('scatter-matrix-columns-ml2', 'value'),
-    Output('final-column-selection-ml2', 'data'),
-    Output('final-column-selection-ml2', 'value'),
-    Output('column-tolimit-ml2','data'),
-    Input("back-kmean-ml2", "n_clicks"),
-    Input("next-kmean-ml2", "n_clicks"),
-    State("stepper-basic-usage-ml2", "active"),
-    State('used-data-ml2', 'data'),
+    Output('column-select-ml3', 'data'),
+    Output('column-select-ml3', 'value'),
+    Output('row-select-ml3', 'data'),
+    Output('row-select-ml3', 'value'),
+    Output('heatmap-columns-ml3', 'data'),
+    Output('heatmap-columns-ml3', 'value'),
+    Output('histogram-columns-ml3', 'data'),
+    Output('histogram-columns-ml3', 'value'),
+    Output('hist2d-columns-ml3', 'data'),
+    Output('hist2d-columns-ml3', 'value'),
+    Output('scatter-matrix-columns-ml3', 'data'),
+    Output('scatter-matrix-columns-ml3', 'value'),
+    Output('final-column-selection-ml3', 'data'),
+    Output('final-column-selection-ml3', 'value'),
+    Output('column-tolimit-ml3','data'),
+    Input("back-kmean-ml3", "n_clicks"),
+    Input("next-kmean-ml3", "n_clicks"),
+    State("stepper-basic-usage-ml3", "active"),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
             
             
 #CB5 - Checking null values
 @dash.callback(
-    Output('missing-value-table-ml2', 'children', allow_duplicate=True),
-    Output('drop-null-btn-div-ml2','hidden', allow_duplicate=True),
-    Input("back-kmean-ml2", "n_clicks"),
-    Input("next-kmean-ml2", "n_clicks"),
-    State("stepper-basic-usage-ml2", "active"),
-    State('used-data-ml2', 'data'),
+    Output('missing-value-table-ml3', 'children', allow_duplicate=True),
+    Output('drop-null-btn-div-ml3','hidden', allow_duplicate=True),
+    Input("back-kmean-ml3", "n_clicks"),
+    Input("next-kmean-ml3", "n_clicks"),
+    State("stepper-basic-usage-ml3", "active"),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def null_val(c1, c2, active,data):
     hidden=True
     ctx = dash.callback_context
     prop_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    if (prop_id == 'next-kmean-ml2' and active==0) or (prop_id=='back-kmean-ml2' and active==2):
+    if (prop_id == 'next-kmean-ml3' and active==0) or (prop_id=='back-kmean-ml3' and active==2):
         get_data = pd.DataFrame(data['table'])
         ch1 = get_data.isna().sum().to_frame().reset_index()
         ch1.columns=['Variables', 'Missing Value Count']
@@ -281,13 +281,13 @@ def null_val(c1, c2, active,data):
 
 #CB6 - droping null values 
 @dash.callback(
-    Output('missing-value-table-ml2', 'children'),
-    Output('alert-missing-delete-ml2', 'children'),
-    Output('alert-missing-delete-ml2', 'hide'),
-    Output('used-data-ml2', 'data', allow_duplicate=True),
-    Output('drop-null-btn-div-ml2','hidden'),
-    Input('drop-missing-val-ml2', 'n_clicks'),
-    State('used-data-ml2', 'data'),
+    Output('missing-value-table-ml3', 'children'),
+    Output('alert-missing-delete-ml3', 'children'),
+    Output('alert-missing-delete-ml3', 'hide'),
+    Output('used-data-ml3', 'data', allow_duplicate=True),
+    Output('drop-null-btn-div-ml3','hidden'),
+    Input('drop-missing-val-ml3', 'n_clicks'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def null_val_drop(n_clicks, data):
@@ -334,7 +334,7 @@ dash.clientside_callback(
         
         //console.log('this is the one', dropdown_data, columnsToDisplay)
         
-        const tableBody = document.getElementById('stats_data-ml2');
+        const tableBody = document.getElementById('stats_data-ml3');
         //console.log('table', tableBody);
         tableBody.innerHTML = '';
         
@@ -375,21 +375,21 @@ dash.clientside_callback(
         return rows;
         }
     """,
-    Output('stats_data-ml2', 'children'),
-    Input('column-select-ml2', 'value'),
-    Input('row-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('stats_data-ml3', 'children'),
+    Input('column-select-ml3', 'value'),
+    Input('row-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 
 #CB8 - built heatmap
 @dash.callback(
-    Output('heatmap-fig-ml2', 'figure'),
-    Input('heatmap-columns-ml2', 'value'),
-    Input("back-kmean-ml2", "n_clicks"),
-    Input("next-kmean-ml2", "n_clicks"),
-    State("stepper-basic-usage-ml2", "active"),
-    State('used-data-ml2', 'data'),
+    Output('heatmap-fig-ml3', 'figure'),
+    Input('heatmap-columns-ml3', 'value'),
+    Input("back-kmean-ml3", "n_clicks"),
+    Input("next-kmean-ml3", "n_clicks"),
+    State("stepper-basic-usage-ml3", "active"),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def getheat(columns, nc, nc1,active, data):
@@ -399,9 +399,9 @@ def getheat(columns, nc, nc1,active, data):
 
 #CB9 - built histogram
 @dash.callback(
-    Output('histogram-fig-ml2', 'figure'),
-    Input('histogram-columns-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('histogram-fig-ml3', 'figure'),
+    Input('histogram-columns-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def gethistogram_fn(columns, data):
@@ -411,10 +411,10 @@ def gethistogram_fn(columns, data):
 
 #CB10 - build 2d Hist
 @dash.callback(
-    Output('hist2d-fig-ml2', 'figure'),
-    Output("hist2d-columns-ml2", "error"),
-    Input('hist2d-columns-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('hist2d-fig-ml3', 'figure'),
+    Output("hist2d-columns-ml3", "error"),
+    Input('hist2d-columns-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def gethist2d(columns, data):
@@ -426,10 +426,10 @@ def gethist2d(columns, data):
 
 #CB11 - build scatter matrix
 @dash.callback(
-    Output('scatter-matrix-fig-ml2', 'figure'),
-    Output("scatter-matrix-columns-ml2", "error"),
-    Input('scatter-matrix-columns-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('scatter-matrix-fig-ml3', 'figure'),
+    Output("scatter-matrix-columns-ml3", "error"),
+    Input('scatter-matrix-columns-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def getscatter(columns, data):
@@ -442,11 +442,11 @@ def getscatter(columns, data):
 
 #CB12 - outlier data
 @dash.callback(
-    Output('outlier-value-table-ml2', 'children', allow_duplicate=True),
-    Input("back-kmean-ml2", "n_clicks"),
-    Input("next-kmean-ml2", "n_clicks"),
-    State("stepper-basic-usage-ml2", "active"),
-    State('used-data-ml2', 'data'),
+    Output('outlier-value-table-ml3', 'children', allow_duplicate=True),
+    Input("back-kmean-ml3", "n_clicks"),
+    Input("next-kmean-ml3", "n_clicks"),
+    State("stepper-basic-usage-ml3", "active"),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def outlier_data(c1, c2, active,data):
@@ -478,14 +478,14 @@ def outlier_data(c1, c2, active,data):
 
 #CB13 - Update outlier data
 @dash.callback(
-    Output('outlier-value-table-ml2', 'children'),
-    Output('alert-outlier-limit-ml2', 'hide'),
-    Output('alert-outlier-limit2-ml2', 'hide'),
-    Output('used-data-ml2', 'data', allow_duplicate=True),
-    Input('limit-outlier-val-ml2', 'n_clicks'),
-    State('used-data-ml2', 'data'),
-    State('column-tolimit-ml2', 'value'),
-    State('outlier-value-table-ml2', 'children'),
+    Output('outlier-value-table-ml3', 'children'),
+    Output('alert-outlier-limit-ml3', 'hide'),
+    Output('alert-outlier-limit2-ml3', 'hide'),
+    Output('used-data-ml3', 'data', allow_duplicate=True),
+    Input('limit-outlier-val-ml3', 'n_clicks'),
+    State('used-data-ml3', 'data'),
+    State('column-tolimit-ml3', 'value'),
+    State('outlier-value-table-ml3', 'children'),
     prevent_initial_call=True
 )
 def update_outlier_data(c1, data,cols,child):
@@ -535,54 +535,87 @@ dash.clientside_callback(
         return "Selected Columns are :- " + column_selected.join(", ");
     }
     """,
-    Output('final-select-show-ml2', 'children'),
-    Input('used-data-ml2', 'data'),
+    Output('final-select-show-ml3', 'children'),
+    Input('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 
 
 #CB15 - store column 
 @dash.callback(
-    Output('used-data-ml2', 'data', allow_duplicate=True),
-    Input('final-select-ml2', 'n_clicks'),
-    State('final-column-selection-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('used-data-ml3', 'data', allow_duplicate=True),
+    Input('final-select-ml3', 'n_clicks'),
+    State('final-column-selection-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def update_selection(click, value, data):
     data['model_selection'] = pd.DataFrame(value, columns=['row']).to_dict('records')
     return data
 
-
+#CB16a - create dendrogram
+@dash.callback(
+    Output('dendrogram-graph', 'figure'),
+    Input('standerdize-type-ml3', 'value'),
+    State('used-data-ml3', 'data'),
+    prevent_initial_call=True    
+)
+def create_Dendrogram(stand, data):
+    return get_dendrogram(data, stand)
 
 #CB16 - create model
 @dash.callback(
-    Output("model-done-ml2", "hide"),
-    Output("model-error-ml2", "hide"),
-    Output("used-data-ml2", 'data', allow_duplicate=True),
-    Output("compute-model-overlay-ml2", 'children'),
-    Output("cluster-table-ml2", 'children'),
-    Input("compute-model-ml2", "n_clicks"),
-    State("eps-ml2", 'value'),
-    State("min-samples-ml2", 'value'),
-    State('used-data-ml2', 'data'),
-    State('standerdize-type-ml2', 'value'),
+    Output("model-done-ml3", "hide"),
+    Output("model-error-ml3", "hide"),
+    Output("used-data-ml3", 'data', allow_duplicate=True),
+    Output("compute-model-overlay-ml3", 'children'),
+    Output("cluster-table-ml3", 'children'),
+    Input("compute-model-ml3", "n_clicks"),
+    State("num-cluster-ml3", 'value'),
+    State('used-data-ml3', 'data'),
+    State('standerdize-type-ml3', 'value'),
     prevent_initial_call=True,
 )
-def create_model_ml2(click, eps, min_s, data, stand):
+def create_model_ml2(click, cluster, data, stand):
     try:
-        data, val = get_db_cluster(data, eps, min_s, stand)
+        data, val = get_hierarchical_cluster(data, cluster, stand)
         return False, True, data, "Model Building Completed", val
     except Exception as e:
-        return True, False, data, f"Model Building Error - {e}", None
+        return True, False, data, f"Model Building Error - {e}, {cluster}", None
     
+
+#CB16b - populate dropdown in feature importance
+@dash.callback(
+    Output('feature-importance-clusters-ml3', 'data'),
+    Input('compute-model-ml3', 'n_clicks'),
+    State('num-cluster-ml3', 'value'),
+    prevent_initial_call=True
+)
+def populate_select_feature_importance(click, value):
+    return [f'cluster_{i}' for i in value]
+
+#CB16c - surrogate
+@dash.callback(
+    Output("feature-importance-fig-ml3", "figure"), 
+    Input("compute-model-importance-ml3", "n_clicks"),
+    State('used-data-ml3', 'data'),
+    State('feature-importance-clusters-ml3', 'value'),
+    prevent_initial_call=True
+)
+def generate_surrogacy(n_nlicks, data, cluster):
+    fig = getfeature_importance(data, cluster)
+    return fig
+    
+   
+
+
 #CB17 - populate dropdown cluster view page
 dash.clientside_callback(
     """
     function update_dropdown2(clicks1, clicks2,active, data) {
         var ctx = dash_clientside.callback_context;
         var prop_id = ctx.triggered[0]['prop_id'];
-        if ((prop_id === 'next-kmean-ml2.n_clicks' && active === 2) || (prop_id === 'back-kmean-ml2.n_clicks' && active === 4)){
+        if ((prop_id === 'next-kmean-ml3.n_clicks' && active === 2) || (prop_id === 'back-kmean-ml3.n_clicks' && active === 4)){
             var cluster_data = data.cluster_list.map(obj => obj.cluster)
             var selection = data.model_selection.map(obj => obj.row)
             return [cluster_data, cluster_data[0], selection, selection, selection, selection[0],cluster_data, cluster_data[0],
@@ -596,41 +629,41 @@ dash.clientside_callback(
     }
     
     """,
-    Output('cluster-select-ml2', 'data'),
-    Output('cluster-select-ml2', 'value'),
-    Output('var-select-ml2', 'data'),
-    Output('var-select-ml2', 'value'),
-    Output('cluster-boxplot-columns-ml2', 'data'),
-    Output('cluster-boxplot-columns-ml2', 'value'),
-    Output('cluster-boxplot-select-ml2', 'data'),
-    Output('cluster-boxplot-select-ml2', 'value'),
-    Output('cluster-scatter-columns-ml2', 'data'),
-    Output('cluster-scatter-columns-ml2', 'value'),
-    Output('cluster-scatter-select-ml2', 'data'),
-    Output('cluster-scatter-select-ml2', 'value'),
-    Output('cluster-3dscatter-columns-ml2', 'data'),
-    Output('cluster-3dscatter-columns-ml2', 'value'),
-    Output('cluster-3dscatter-select-ml2', 'data'),
-    Output('cluster-3dscatter-select-ml2', 'value'),
-    Output('cluster-pca-columns-ml2', 'data'),
-    Output('cluster-pca-columns-ml2', 'value'),
-    Output('cluster-pca-select-ml2', 'data'),
-    Output('cluster-pca-select-ml2', 'value'),
-    Input("back-kmean-ml2", "n_clicks"),
-    Input("next-kmean-ml2", "n_clicks"),
-    State("stepper-basic-usage-ml2", "active"),
-    State('used-data-ml2', 'data'),
+    Output('cluster-select-ml3', 'data'),
+    Output('cluster-select-ml3', 'value'),
+    Output('var-select-ml3', 'data'),
+    Output('var-select-ml3', 'value'),
+    Output('cluster-boxplot-columns-ml3', 'data'),
+    Output('cluster-boxplot-columns-ml3', 'value'),
+    Output('cluster-boxplot-select-ml3', 'data'),
+    Output('cluster-boxplot-select-ml3', 'value'),
+    Output('cluster-scatter-columns-ml3', 'data'),
+    Output('cluster-scatter-columns-ml3', 'value'),
+    Output('cluster-scatter-select-ml3', 'data'),
+    Output('cluster-scatter-select-ml3', 'value'),
+    Output('cluster-3dscatter-columns-ml3', 'data'),
+    Output('cluster-3dscatter-columns-ml3', 'value'),
+    Output('cluster-3dscatter-select-ml3', 'data'),
+    Output('cluster-3dscatter-select-ml3', 'value'),
+    Output('cluster-pca-columns-ml3', 'data'),
+    Output('cluster-pca-columns-ml3', 'value'),
+    Output('cluster-pca-select-ml3', 'data'),
+    Output('cluster-pca-select-ml3', 'value'),
+    Input("back-kmean-ml3", "n_clicks"),
+    Input("next-kmean-ml3", "n_clicks"),
+    State("stepper-basic-usage-ml3", "active"),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
             
 
 #CB18 - Cluster stats
 @dash.callback(
-    Output('cluster_stats_data-ml2', 'children'),
-    Input('cluster-select-ml2', 'value'),
-    Input('var-select-ml2', 'value'),
-    Input('stats-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('cluster_stats_data-ml3', 'children'),
+    Input('cluster-select-ml3', 'value'),
+    Input('var-select-ml3', 'value'),
+    Input('stats-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def update_cluster_table(cluster, var, stat, data):
@@ -660,10 +693,10 @@ def update_cluster_table(cluster, var, stat, data):
 
 #CB19 - boxplot
 @dash.callback(
-    Output('cluster-boxplot-fig-ml2', 'figure'),
-    Input('cluster-boxplot-columns-ml2', 'value'),
-    Input('cluster-boxplot-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('cluster-boxplot-fig-ml3', 'figure'),
+    Input('cluster-boxplot-columns-ml3', 'value'),
+    Input('cluster-boxplot-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def getbox(column, cluster, data):
@@ -673,11 +706,11 @@ def getbox(column, cluster, data):
 
 #CB20 - scatter
 @dash.callback(
-    Output('cluster-scatter-fig-ml2', 'figure'),
-    Output("cluster-scatter-columns-ml2", "error"),
-    Input('cluster-scatter-columns-ml2', 'value'),
-    Input('cluster-scatter-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('cluster-scatter-fig-ml3', 'figure'),
+    Output("cluster-scatter-columns-ml3", "error"),
+    Input('cluster-scatter-columns-ml3', 'value'),
+    Input('cluster-scatter-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def getscatter2(columns, cluster, data):
@@ -689,11 +722,11 @@ def getscatter2(columns, cluster, data):
 
 #CB21 - 3d Scatter
 @dash.callback(
-    Output('cluster-3dscatter-fig-ml2', 'figure'),
-    Output("cluster-3dscatter-columns-ml2", "error"),
-    Input('cluster-3dscatter-columns-ml2', 'value'),
-    Input('cluster-3dscatter-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('cluster-3dscatter-fig-ml3', 'figure'),
+    Output("cluster-3dscatter-columns-ml3", "error"),
+    Input('cluster-3dscatter-columns-ml3', 'value'),
+    Input('cluster-3dscatter-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def get3dscatter(columns, cluster, data):
@@ -705,12 +738,12 @@ def get3dscatter(columns, cluster, data):
 
 #CB22 - PCA2D
 @dash.callback(
-    Output('cluster-pca-fig-ml2', 'figure'),
-    Output('cluster-pca-columns-ml2', 'error'),
-    Input('pca2d-compute-ml2', 'n_clicks'),
-    State('cluster-pca-columns-ml2', 'value'),
-    State('cluster-pca-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('cluster-pca-fig-ml3', 'figure'),
+    Output('cluster-pca-columns-ml3', 'error'),
+    Input('pca2d-compute-ml3', 'n_clicks'),
+    State('cluster-pca-columns-ml3', 'value'),
+    State('cluster-pca-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def pca_2d(click, columns, cluster, data):
@@ -736,11 +769,11 @@ def pca_2d(click, columns, cluster, data):
 
 #CB23 - PCA3D
 @dash.callback(
-    Output('cluster-pca3d-fig-ml2', 'figure'),
-    Input('pca3d-compute-ml2', 'n_clicks'),
-    State('cluster-pca-columns-ml2', 'value'),
-    State('cluster-pca-select-ml2', 'value'),
-    State('used-data-ml2', 'data'),
+    Output('cluster-pca3d-fig-ml3', 'figure'),
+    Input('pca3d-compute-ml3', 'n_clicks'),
+    State('cluster-pca-columns-ml3', 'value'),
+    State('cluster-pca-select-ml3', 'value'),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def pca_3d(click, columns, cluster, data):
@@ -765,27 +798,16 @@ def pca_3d(click, columns, cluster, data):
         return fig
 
 
-#CB24 - surrogate
-@dash.callback(
-    Output("feature-importance-fig-ml2", "figure"), 
-    Input("compute-model-importance-ml2", "n_clicks"),
-    State('used-data-ml2', 'data'),
-    prevent_initial_call=True
-)
-def generate_surrogacy(n_nlicks, data):
-    fig = getfeature_importance(data)
-    return fig
-    
-    
+ 
         
     
 
 
 #CB25 - Download
 @dash.callback(
-    Output("download_xslx-ml2", "data"), 
-    Input("btn_xslx-ml2", "n_clicks"),
-    State('used-data-ml2', 'data'),
+    Output("download_xslx-ml3", "data"), 
+    Input("btn_xslx-ml3", "n_clicks"),
+    State('used-data-ml3', 'data'),
     prevent_initial_call=True
 )
 def generate_xlsx(n_nlicks, data):

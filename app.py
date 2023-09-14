@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 14 01:11:24 2023
+Created on Sat Apr 22 23:28:04 2023
 
-@author: Memre
+@author: abhinav.kumar
 """
+
 from dash import Dash, html, Output, Input, State, dcc
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
@@ -29,64 +30,51 @@ server = app.server
 app.layout = dmc.MantineProvider(
         theme={
             'fontFamily': '"Inter", sans-serif',
-            "components": {
-                "NavLink":{'styles':{'label':{'color':'#c2c7d0'}}}
-                },
             },
         children=[
+            dcc.Location(id='url', refresh=False),
             dmc.Container([
                 dmc.Navbar(
-                    p="md",
+                    py="md",
+                    pl='xs',
+                    pr=0,
                     fixed=False,
-                    width={"base": 400},
+                    width={"base": 300},
                     hidden=True,
                     hiddenBreakpoint='md',
                     position='right',
                     height='100vh',
-                    id='sidebar',
+                    id='sidebar2',
+                    sx={'&:hover':{'width': '300px'}},
                     children=[
                         html.Div(
                             [
                                 dmc.NavLink(
-                                    opened=False,
-                                    label="Exploratory Data Analysis",
-                                    icon=get_icon(icon="tabler:gauge"),
-                                    rightSection=get_icon(icon="tabler-chevron-right"),
-                                    children=[
-                                        dmc.NavLink(
-                                            label="Option 1",
-                                            href="/option1"  # Bu bir örnek. İstediğiniz URL'yi buraya ekleyebilirsiniz.
-                                        ),
-                                        dmc.NavLink(
-                                            label="Option 2",
-                                            href="/option2"  # Bu bir örnek. İstediğiniz URL'yi buraya ekleyebilirsiniz.
-                                        )
-                                    ]
-                                ),
-                                dmc.NavLink(
-                                    opened=False,
                                     label="Clustering",
-                                    icon=get_icon(icon="tabler:activity"),
-                                    rightSection=get_icon(icon="tabler-chevron-right"),
-                                    variant="subtle",
-                                    active=True,
+                                    icon=get_icon(icon="carbon:assembly-cluster"),
+                                    childrenOffset=35,
+                                    opened=True,
                                     children=[
-                                        dmc.NavLink(
-                                            label="DBscan",
-                                            href="/dbscan"
+                                        dmc.NavLink(label="KMean",
+                                                    href='/kmean',
+                                                    id='kmean-navbar',
+                                                    icon=get_icon(icon='carbon:edge-cluster')
                                         ),
-                                        dmc.NavLink(
-                                            label="Kmeans",
-                                            href="/kmean"
-                                        )
-                                    ]
+                                        dmc.NavLink(label="DBScan",
+                                                    href='/dbscan',
+                                                    id='dbscan-navbar', 
+                                                    icon=get_icon(icon='carbon:edge-cluster')
+                                        ),
+                                        dmc.NavLink(label="Hierarchical",
+                                                    href='/hierarchical',
+                                                    icon=get_icon(icon='carbon:edge-cluster')
+                                        ),
+                                    ],
                                 ),
-                            ],
-                            style={'white-space': 'nowrap'},
-                        )
-                    ], style={'overflow': 'hidden', 'transition': 'width 0.3s ease-in-out', 'background-color': '#343a40'}
-
-            ),         
+                                                    ],
+                            style={'whiteSpace': 'nowrap'},
+                        )],style={'overflow':'hidden', 'transition': 'width 0.3s ease-in-out', 'backgroundColor':''}
+                    ),      
                 dmc.Drawer(
                         #title="Company Name",
                         id="drawer-simple2",
@@ -167,22 +155,27 @@ app.layout = dmc.MantineProvider(
                                             dmc.Group(
                                                 children=[
                                                     dmc.MediaQuery([
-                                                      dmc.Text([
-                                                                dmc.Anchor("Mehmet Emre Toktay",href="memretoktay.net",
+                                                      dmc.Text(['Created By ',
+                                                                dmc.Anchor("Abhinav Kumar",href="http://www.linkedin.com/in/abhinavk910",
                                                                         target="_blank", style={'textDecoration': 'none', 'color':'#457b9d'})
                                                       ], align='center', color="#a8dadc", weight=700)
                                                     ], smallerThan='xs', styles={'fontSize':12}),  
- 
+                                                    html.A(
+                                                        dmc.Avatar(src='assets/head.jpg',
+                                                            size="xs",radius="lg"),
+                                                    href="https://abhinavk910.github.io/portfolio/",
+                                                    target="_blank",
+                                                    ),
                                                     html.A(
                                                         dmc.Avatar(DashIconify(icon="mdi:linkedin", width=15, color="#a8dadc"),#'#0a66c2'
                                                             size="xs",radius="xs"),
-                                                    href="https://www.linkedin.com/in/memretoktay",
+                                                    href="http://www.linkedin.com/in/abhinavk910",
                                                     target="_blank",
                                                     ),
                                                     html.A(
                                                         dmc.Avatar(DashIconify(icon="mdi:github", width=15, color="#a8dadc"),#'#24292f'
                                                             size="xs",radius="xs"),
-                                                    href="https://github.com/EmreToktay",
+                                                    href="https://github.com/Abhinavk910/ML_playground",
                                                     target="_blank",
                                                     )
                                                 ], spacing='xs', position='right'
@@ -260,4 +253,4 @@ dash.clientside_callback(
 )
 
 if __name__ == '__main__':
-	app.run_server(debug=True, port=8052)
+	app.run_server(debug=True, port=8051)

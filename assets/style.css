@@ -1,0 +1,12 @@
+.mantine-InputWrapper-root,
+.mantine-Input-wrapper, 
+.mantine-Input-input, 
+.mantine-NumberInput-input, 
+.mantine-Input-withIcon, 
+.mantine-NumberInput-withIcon {
+    background-color: transparent !important;
+}
+
+.mantine-Container-root {
+    background-color: #d8dde6 !important;
+}

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Apr 22 23:35:22 2023
+Created on Thu Sep 14 01:11:24 2023
 
-@author: abhinav.kumar
+@author: Memre
 """
 
 import dash
@@ -28,7 +28,7 @@ layout = html.Div(
                             align='center',
                             weight=700,
                             children=[
-                                'Welcome To ML Playground!!!'    
+                                'Machine Learning Dashboard!!!'    
                             ]    
                         )    
                     ]
@@ -36,5 +36,5 @@ layout = html.Div(
             ]   
         )
     ], className='min-vh-100 d-flex flex-column justify-content-center align-items-center', 
-                 style={"backgroundColor": "whitesmoke"}
+                 style={"backgroundColor": "silver"}
 )

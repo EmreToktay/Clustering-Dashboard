@@ -167,7 +167,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='supermaket', variant='gradient', size='xs')
+                                                                                   id='supermarket', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]

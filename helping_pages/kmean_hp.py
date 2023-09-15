@@ -117,7 +117,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='customer', variant='gradient', size='xs')
+                                                                                   id='soil-mineral', variant='gradient', size='xs')
                                                                     ]
                                                                 ),
                                                             ]
@@ -142,7 +142,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='creditcard', variant='gradient', size='xs')
+                                                                                   id='literacy-india', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
@@ -167,7 +167,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='supermarket', variant='gradient', size='xs')
+                                                                                   id='hatecrime-india', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]

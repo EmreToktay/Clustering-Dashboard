@@ -162,13 +162,13 @@ dash.clientside_callback(
               Output('alert-check2', 'hide'),Output('alert-check2', 'color'),Output('alert-check2', 'title'),Output('alert-check2', 'children'),
               Output('check1', 'value'),Output('table-data', 'children'),Output('table-data2', 'children'), Output('used-data', 'data'),
               Input('upload-data', 'contents'),
-              Input('customer', 'n_clicks'),
-              Input('creditcard','n_clicks'),
-              Input('supermarket', 'n_clicks'),
+              Input('soil-mineral', 'n_clicks'),
+              Input('literacy-india','n_clicks'),
+              Input('hatecrime-india', 'n_clicks'),
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
-def update_output(contents, customer, creditcard, supermarket, filename):
+def update_output(contents, soil, literacy, hate, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data':
@@ -192,16 +192,16 @@ def update_output(contents, customer, creditcard, supermarket, filename):
         else:
             return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
     else:
-        if input_id =='customer':
-            df = pd.read_csv('assets/data/customer.csv')
+        if input_id =='soil-mineral':
+            df = pd.read_csv('assets/data/soil.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'creditcard':
-            df = pd.read_csv('assets/data/creditcard.csv')
+        elif input_id == 'literacy-india':
+            df = pd.read_csv('assets/data/literacy.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'supermarket':
-            df = pd.read_csv('assets/data/supermarket.csv')
+        elif input_id == 'hatecrime-india':
+            df = pd.read_csv('assets/data/hate_crime.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
         return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data

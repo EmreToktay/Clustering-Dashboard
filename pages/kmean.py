@@ -168,7 +168,7 @@ dash.clientside_callback(
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
-def update_output(contents, soil, literacy, hate, filename):
+def update_output(contents, customer, creditcard, supermarket, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data':

@@ -112,7 +112,7 @@ data_page1 = dmc.Container(
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Customer data for clustering'
+                                                                                'Customer data for Clustering'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
@@ -137,12 +137,12 @@ data_page1 = dmc.Container(
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Literacy Rate Across Different Districts of India'
+                                                                                'Creditcard data for clustering'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='literacy-india', variant='gradient', size='xs')
+                                                                                   id='creditcard-data', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
@@ -162,12 +162,12 @@ data_page1 = dmc.Container(
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Hate and Crime Across Different Districts of India'
+                                                                                'Supermarket data for clustering'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='hatecrime-india', variant='gradient', size='xs')
+                                                                                   id='supermarket-data', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]

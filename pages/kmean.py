@@ -162,7 +162,7 @@ dash.clientside_callback(
               Output('alert-check2', 'hide'),Output('alert-check2', 'color'),Output('alert-check2', 'title'),Output('alert-check2', 'children'),
               Output('check1', 'value'),Output('table-data', 'children'),Output('table-data2', 'children'), Output('used-data', 'data'),
               Input('upload-data', 'contents'),
-              Input('soil-mineral', 'n_clicks'),
+              Input('customer-data', 'n_clicks'),
               Input('literacy-india','n_clicks'),
               Input('hatecrime-india', 'n_clicks'),
               State('upload-data', 'filename'),
@@ -192,8 +192,8 @@ def update_output(contents, soil, literacy, hate, filename):
         else:
             return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
     else:
-        if input_id =='soil-mineral':
-            df = pd.read_csv('assets/data/soil.csv')
+        if input_id =='customer-data':
+            df = pd.read_csv('assets/data/customer.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
         elif input_id == 'literacy-india':

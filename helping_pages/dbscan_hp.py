@@ -116,7 +116,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='soil-mineral-ml2', variant='gradient', size='xs')
+                                                                                   id='creditcard-ml2', variant='gradient', size='xs')
                                                                     ]
                                                                 ),
                                                             ]
@@ -141,7 +141,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='literacy-india-ml2', variant='gradient', size='xs')
+                                                                                   id='customer-ml2', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
@@ -158,15 +158,6 @@ data_page1 = dmc.Container(
                                                                                 height=160,
                                                                             )
                                                                         ),
-                                                                        dmc.Text(
-                                                                            mt=10,
-                                                                            children=[
-                                                                                'Hate and Crime Across Different Districts of India'
-                                                                            ]
-                                                                        ),
-                                                                        dmc.Button('Get Data',mt=10,
-                                                                                   leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='hatecrime-india-ml2', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]

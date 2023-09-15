@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 14 01:11:24 2023
+Created on Sun Apr 23 01:21:24 2023
 
-@author: Memre
+@author: abhinav.kumar
 """
 
 from dash import html, dcc, Input, Output, State, no_update
@@ -29,7 +29,7 @@ active = 0
 layout = html.Div([
         
         dmc.Container(
-            style={'backgroundColor':'silver','marginTop':'0.2rem','padding':'1rem',
+            style={'backgroundColor':'whitesmoke','marginTop':'0.2rem','padding':'1rem',
                    'minHeight':'100vh', 'maxWidth':'1200px'},
             className='container-ml',
             children=[
@@ -42,25 +42,25 @@ layout = html.Div([
                     styles={'separator':{'margin':'0px'}},
                     children=[
                         dmc.StepperStep(
-                            label="Load Data",
-                    
+                            label="First step",
+                            description="Load Data",
                             size='xs',
                             children=data_page1
                         ),
                         dmc.StepperStep(
-                            label="Data Cleaning",
-                           
+                            label="Second step",
+                            description="Data Cleaning",
                             id='step2',
                             children=data_page2
                         ),
                         dmc.StepperStep(
-                            label="Model Building",
- 
+                            label="Third step",
+                            description="Model Building",
                             children=data_page3
                         ),
                         dmc.StepperStep(
-                            label="View Cluster",
- 
+                            label="Final step",
+                            description="View Cluster",
                             children=data_page4
                         ),
                         dmc.StepperCompleted(
@@ -157,28 +157,28 @@ dash.clientside_callback(
                  
                     
 
+#CB2 -  uploading table and storing
 @dash.callback(Output('alert-check', 'hide'),Output('alert-check', 'color'),Output('alert-check', 'title'),Output('alert-check', 'children'),
               Output('alert-check2', 'hide'),Output('alert-check2', 'color'),Output('alert-check2', 'title'),Output('alert-check2', 'children'),
               Output('check1', 'value'),Output('table-data', 'children'),Output('table-data2', 'children'), Output('used-data', 'data'),
               Input('upload-data', 'contents'),
-              Input('customer-data', 'n_clicks'),
-              Input('creditcard-data', 'n_clicks'),
+              Input('creditcard', 'n_clicks'),
+              Input('customer','n_clicks'),
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
-def update_output(contents, customer, creditcard, filename):
+def update_output(contents, soil, literacy, hate, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    
     if input_id == 'upload-data':
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
         message = ""
-        error_message = "File is not in CSV format"
-        
+        error_message = "File in not in CSV format"
         try:
             if '.csv' in filename:
-                df = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
+                df = pd.read_csv(
+                    io.StringIO(decoded.decode('utf-8')))
                 message = 'Done'
                 val = create_table(df.iloc[:10, :6])
                 store_data = get_data_initial(df)
@@ -187,24 +187,20 @@ def update_output(contents, customer, creditcard, filename):
             error_message = e
             
         if message == 'Done':
-            return (False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",
-                    no_update,no_update,no_update,no_update,'check', val, no_update, store_data)
+            return False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",no_update,no_update,no_update,no_update,'check', val, no_update, store_data
         else:
-            return (False, 'red', error_message," ", 
-                    no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update)
+            return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
     else:
-        if input_id == 'customer-data':
-            df = pd.read_csv('assets/data/Customer.csv')
+        if input_id =='creditcard':
+            df = pd.read_csv('assets/data/creditcard.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'creditcard-data':
-            df = pd.read_csv('assets/data/Creditcard.csv')
+        elif input_id == 'customer':
+            df = pd.read_csv('assets/data/customer.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        
-        return (no_update,no_update,no_update,no_update,False,'green','Data Loaded', 
-                f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',
-                no_update,val,store_data)
+        return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
+
 
 
 #CB3 -  populate all drowpdown

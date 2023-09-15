@@ -113,6 +113,10 @@ app.layout = dmc.MantineProvider(
                                                         id='dbscan-drawer',
                                                         icon=get_icon(icon='carbon:edge-cluster')
                                             ),
+                                            dmc.NavLink(label="Hierarchical",
+                                                        href='/hierarchical',
+                                                        icon=get_icon(icon='carbon:edge-cluster')
+                                            ),
                                         ],
                                     ),
                                 ],
@@ -244,6 +248,8 @@ dash.clientside_callback(
         return "KMean";
       } else if (url === '/dbscan') {
         return "DBScan";
+      } else if (url === '/hierarchical') {
+        return 'Hierarchical'    
       } else {
         return ""
      }

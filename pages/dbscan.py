@@ -38,14 +38,6 @@ layout = html.Div([
                     size='xs',
                     contentPadding=1,
                     styles={'separator':{'margin':'0px'}},
-            children=[
-                dcc.Store(id='used-data', data=None, storage_type='session'),
-                dmc.Stepper(
-                    id="stepper-basic-usage",
-                    active=active,
-                    size='xs',
-                    contentPadding=1,
-                    styles={'separator':{'margin':'0px'}},
                     children=[
                         dmc.StepperStep(
                             label="Load Data",

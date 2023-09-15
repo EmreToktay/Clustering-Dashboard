@@ -163,8 +163,8 @@ dash.clientside_callback(
               Output('check1', 'value'),Output('table-data', 'children'),Output('table-data2', 'children'), Output('used-data', 'data'),
               Input('upload-data', 'contents'),
               Input('customer-data', 'n_clicks'),
-              Input('literacy-india','n_clicks'),
-              Input('hatecrime-india', 'n_clicks'),
+              Input('creditcar-data','n_clicks'),
+              Input('supermarket-data', 'n_clicks'),
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
@@ -196,12 +196,12 @@ def update_output(contents, soil, literacy, hate, filename):
             df = pd.read_csv('assets/data/customer.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'literacy-india':
-            df = pd.read_csv('assets/data/literacy.csv')
+        elif input_id == 'creditcard-data':
+            df = pd.read_csv('assets/data/creditcard.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'hatecrime-india':
-            df = pd.read_csv('assets/data/hate_crime.csv')
+        elif input_id == 'supermarket-data':
+            df = pd.read_csv('assets/data/supermarket.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
         return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data

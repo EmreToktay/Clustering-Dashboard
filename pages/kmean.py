@@ -27,76 +27,89 @@ max_step = 4
 active = 0
 
 layout = html.Div([
-    dmc.Container(
-        style={'backgroundColor':'whitesmoke','marginTop':'0.2rem','padding':'1rem',
-               'minHeight':'100vh', 'maxWidth':'1200px'},
-        className='container-ml',
-        children=[
-            dcc.Store(id='used-data', data=None, storage_type='session'),
-            dmc.Stepper(
-                id="stepper-basic-usage",
-                active=active,
-                size='xs',
-                contentPadding=1,
-                styles={'separator':{'margin':'0px'}},
-                children=[
-                    dmc.StepperStep(
-                        label="Load Data",
-                        size='xs',
-                        children=data_page1
-                    ),
-                    dmc.StepperStep(
-                        label="Data Cleaning",
-                        id='step2',
-                        children=data_page2
-                    ),
-                    dmc.StepperStep(
-                        label="Model Building",
-                        children=data_page3
-                    ),
-                    dmc.StepperStep(
-                        label="View Cluster",
-                        children=data_page4
-                    ),
-                    dmc.StepperCompleted(
-                        children=[
-                            dmc.Text(
-                                "Done!!!",
-                                align="center", weight=700, size=30
-                            ),
-                            dmc.Center(
-                                style={'marginTop':'20px'},
-                                children=[
-                                    dmc.Button("Download xlsx", id="btn_xslx",
-                                           leftIcon=DashIconify(icon="material-symbols:download-rounded"),
-                                           style={'width':'200px', 'margin':'auto'}),
-                                    dcc.Download(id="download_xslx")
-                                ]
-                            )
-                        ]
-                    )
-                ]
-            ),
-            dmc.Group(
-                position="center",
-                mt="xl",
-                children=[
-                    html.Div(
-                        dmc.Button("Back", id="back-kmean", variant="default",leftIcon=DashIconify(icon="material-symbols:arrow-back")),
-                        id='back-div',
-                        hidden=False
-                    ),
-                    html.Div(
-                        dmc.Button("Next step", id="next-kmean",variant='gradient', rightIcon=DashIconify(icon="material-symbols:arrow-forward")),
-                        id='next-div',
-                        hidden=False
-                    )
-                ]
-            )
-        ]
-    )
-])
-
+        
+        dmc.Container(
+            style={'backgroundColor':'whitesmoke','marginTop':'0.2rem','padding':'1rem',
+                   'minHeight':'100vh', 'maxWidth':'1200px'},
+            className='container-ml',
+            children=[
+                dcc.Store(id='used-data', data=None, storage_type='session'),
+                dmc.Stepper(
+                    id="stepper-basic-usage",
+                    active=active,
+                    size='xs',
+                    contentPadding=1,
+                    styles={'separator':{'margin':'0px'}},
+            children=[
+                dcc.Store(id='used-data', data=None, storage_type='session'),
+                dmc.Stepper(
+                    id="stepper-basic-usage",
+                    active=active,
+                    size='xs',
+                    contentPadding=1,
+                    styles={'separator':{'margin':'0px'}},
+                    children=[
+                        dmc.StepperStep(
+                            label="Load Data",
+                    
+                            size='xs',
+                            children=data_page1
+                        ),
+                        dmc.StepperStep(
+                            label="Data Cleaning",
+                           
+                            id='step2',
+                            children=data_page2
+                        ),
+                        dmc.StepperStep(
+                            label="Model Building",
+ 
+                            children=data_page3
+                        ),
+                        dmc.StepperStep(
+                            label="View Cluster",
+ 
+                            children=data_page4
+                        ),
+                        dmc.StepperCompleted(
+                            children=[
+                                dmc.Text(
+                                    "Done!!!",
+                                    align="center", weight=700, size=30
+                                ),
+                                dmc.Center(
+                                    style={'marginTop':'20px'},
+                                    children=[
+                                        dmc.Button("Download xlsx", id="btn_xslx",
+                                               leftIcon=DashIconify(icon="material-symbols:download-rounded"),
+                                               style={'width':'200px', 'margin':'auto'}),
+                                        dcc.Download(id="download_xslx")
+                                    ]   
+                                )
+                            ]
+                        ),
+                    ],
+                ),
+                dmc.Group(
+                    position="center",
+                    mt="xl",
+                    children=[
+                        html.Div(
+                            dmc.Button("Back", id="back-kmean", variant="default",leftIcon=DashIconify(icon="material-symbols:arrow-back")),
+                            id='back-div',
+                            hidden=False
+                        ),
+                        html.Div(
+                            dmc.Button("Next step", id="next-kmean",variant='gradient', rightIcon=DashIconify(icon="material-symbols:arrow-forward")),
+                            id='next-div',
+                            hidden=False
+                        )
+                    ],
+                ),
+            ]
+        )
+    ]
+)
 
 
 ##########################   callbacks   ######################################

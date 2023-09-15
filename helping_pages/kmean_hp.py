@@ -118,7 +118,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data', mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='customer-data', variant='gradient', size='xs')                                                                    ]
+                                                                                   id='customer', variant='gradient', size='xs')                                                                    ]
                                                                 ),
                                                             ]
                                                         ),
@@ -143,7 +143,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='creditcard-data', variant='gradient', size='xs')
+                                                                                   id='creditcard', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]

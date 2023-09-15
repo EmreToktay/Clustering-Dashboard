@@ -157,28 +157,29 @@ dash.clientside_callback(
                  
                     
 
+#CB2 -  uploading table and storing
 @dash.callback(Output('alert-check', 'hide'),Output('alert-check', 'color'),Output('alert-check', 'title'),Output('alert-check', 'children'),
               Output('alert-check2', 'hide'),Output('alert-check2', 'color'),Output('alert-check2', 'title'),Output('alert-check2', 'children'),
               Output('check1', 'value'),Output('table-data', 'children'),Output('table-data2', 'children'), Output('used-data', 'data'),
               Input('upload-data', 'contents'),
-              Input('customer-data', 'n_clicks'),
-              Input('creditcard-data', 'n_clicks'),
+              Input('customer', 'n_clicks'),
+              Input('creditcard','n_clicks'),
+              Input('supermarket', 'n_clicks'),
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
-def update_output(contents, customer, creditcard, filename):
+def update_output(contents, customer, creditcard, supermarket, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    
     if input_id == 'upload-data':
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
         message = ""
-        error_message = "File is not in CSV format"
-        
+        error_message = "File in not in CSV format"
         try:
             if '.csv' in filename:
-                df = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
+                df = pd.read_csv(
+                    io.StringIO(decoded.decode('utf-8')))
                 message = 'Done'
                 val = create_table(df.iloc[:10, :6])
                 store_data = get_data_initial(df)
@@ -187,24 +188,23 @@ def update_output(contents, customer, creditcard, filename):
             error_message = e
             
         if message == 'Done':
-            return (False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",
-                    no_update,no_update,no_update,no_update,'check', val, no_update, store_data)
+            return False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",no_update,no_update,no_update,no_update,'check', val, no_update, store_data
         else:
-            return (False, 'red', error_message," ", 
-                    no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update)
+            return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
     else:
-        if input_id == 'customer-data':
+        if input_id =='soil-mineral':
             df = pd.read_csv('assets/data/customer.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'creditcard-data':
+        elif input_id == 'literacy-india':
             df = pd.read_csv('assets/data/creditcard.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        
-        return (no_update,no_update,no_update,no_update,False,'green','Data Loaded', 
-                f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',
-                no_update,val,store_data)
+        elif input_id == 'hatecrime-india':
+            df = pd.read_csv('assets/data/supermarket.csv')
+            val = create_table(df.iloc[:10, :6])
+            store_data = get_data_initial(df)
+        return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
 
 
 #CB3 -  populate all drowpdown

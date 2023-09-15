@@ -54,7 +54,8 @@ def getfeature_importance(data):
     importance = importance.sort_values('importance')
     fig = px.bar(importance, y='Feature', x='importance', orientation='h')
     fig.update_layout(
-        plot_bgcolor="#fff",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
         font=dict(color='#999999'),
         height=500,
         margin=dict(t=0, l=0, r=0, b=10, pad=0,autoexpand=True),

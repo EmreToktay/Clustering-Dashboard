@@ -101,23 +101,23 @@ data_page1 = dmc.Container(
                                                             md=4,
                                                             children=[
                                                                 dmc.Card(
+                                                                    style={'backgroundColor': 'transparent'},
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/soil.jpg",
+                                                                                src="assets/image/customer.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Soil Mineral Content Across Different Districts of India'
+                                                                                'Customer Data'
                                                                             ]
                                                                         ),
-                                                                        dmc.Button('Get Data',mt=10,
+                                                                        dmc.Button('Get Data', mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='creditcard-ml2', variant='gradient', size='xs')
-                                                                    ]
+                                                                                   id='customer-data-ml2', variant='gradient', size='xs')                                                                    ]
                                                                 ),
                                                             ]
                                                         ),
@@ -126,44 +126,30 @@ data_page1 = dmc.Container(
                                                             md=4,
                                                             children=[
                                                                 dmc.Card(
+                                                                    style={'backgroundColor': 'transparent'},
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/literacy.jpg",
+                                                                                src="assets/image/creditcard.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Literacy Rate Across Different Districts of India'
+                                                                                'Credit Card Data'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='customer-ml2', variant='gradient', size='xs')
+                                                                                   id='creditcard-data-ml2', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
                                                         ),
-                                                        dmc.Col(
-                                                            span=12,
-                                                            md=4,
-                                                            children=[
-                                                                dmc.Card(
-                                                                    children=[
-                                                                        dmc.CardSection(
-                                                                            dmc.Image(
-                                                                                src="assets/image/hate.jpg",
-                                                                                height=160,
-                                                                            )
-                                                                        ),
-                                                                    ]
-                                                                )
-                                                            ]
-                                                        )
                                                     ]
                                                 ),
+
                                                 dmc.Alert( title="Success!", color="green", id='alert-check2-ml2',
                                                       icon=DashIconify(icon="mdi:success-circle-outline"),
                                                       duration=60000,hide=True, style={'marginTop':'-40px'}

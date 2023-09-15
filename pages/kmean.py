@@ -192,15 +192,15 @@ def update_output(contents, customer, creditcard, supermarket, filename):
         else:
             return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
     else:
-        if input_id =='soil-mineral':
+        if input_id =='customer':
             df = pd.read_csv('assets/data/customer.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'literacy-india':
+        elif input_id == 'creditcard':
             df = pd.read_csv('assets/data/creditcard.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'hatecrime-india':
+        elif input_id == 'supermarket':
             df = pd.read_csv('assets/data/supermarket.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)

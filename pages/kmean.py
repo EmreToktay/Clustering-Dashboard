@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 14 01:11:24 2023
+Created on Sun Apr 23 01:21:24 2023
 
-@author: Memre
+@author: abhinav.kumar
 """
 
 from dash import html, dcc, Input, Output, State, no_update
@@ -29,7 +29,7 @@ active = 0
 layout = html.Div([
         
         dmc.Container(
-            style={'backgroundColor':'silver','marginTop':'0.2rem','padding':'1rem',
+            style={'backgroundColor':'whitesmoke','marginTop':'0.2rem','padding':'1rem',
                    'minHeight':'100vh', 'maxWidth':'1200px'},
             className='container-ml',
             children=[
@@ -42,25 +42,25 @@ layout = html.Div([
                     styles={'separator':{'margin':'0px'}},
                     children=[
                         dmc.StepperStep(
-                            label="Load Data",
-                    
+                            label="First step",
+                            description="Load Data",
                             size='xs',
                             children=data_page1
                         ),
                         dmc.StepperStep(
-                            label="Data Cleaning",
-                           
+                            label="Second step",
+                            description="Data Cleaning",
                             id='step2',
                             children=data_page2
                         ),
                         dmc.StepperStep(
-                            label="Model Building",
- 
+                            label="Third step",
+                            description="Model Building",
                             children=data_page3
                         ),
                         dmc.StepperStep(
-                            label="View Cluster",
- 
+                            label="Final step",
+                            description="View Cluster",
                             children=data_page4
                         ),
                         dmc.StepperCompleted(
@@ -168,7 +168,7 @@ dash.clientside_callback(
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
-def update_output(contents, customer, creditcard, supermarket, filename):
+def update_output(contents, soil, literacy, hate, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data':
@@ -205,6 +205,7 @@ def update_output(contents, customer, creditcard, supermarket, filename):
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
         return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
+
 
 
 #CB3 -  populate all drowpdown

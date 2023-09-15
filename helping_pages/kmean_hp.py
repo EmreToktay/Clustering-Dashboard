@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 14 01:11:24 2023
+Created on Sun Apr 23 01:25:20 2023
 
-@author: Memre
+@author: abhinav.kumar
 """
 
 from dash import html, dcc
@@ -17,6 +17,7 @@ innerheadingsize=20
 
 
 
+#Load Data
 data_page1 = dmc.Container(
             style={'maxWidth':innerContainerWidth},
             className='container-ml',
@@ -104,7 +105,7 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/customer.jpg",
+                                                                                src="assets/image/soil.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
@@ -129,7 +130,7 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/creditcard.jpg",
+                                                                                src="assets/image/literacy.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
@@ -154,7 +155,7 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/creditcard.jpg",
+                                                                                src="assets/image/hate.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
@@ -166,7 +167,7 @@ data_page1 = dmc.Container(
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='supermarket', variant='gradient', size='xs')
+                                                                                   id='supermaket', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
@@ -198,7 +199,6 @@ data_page1 = dmc.Container(
                 )
             ]
         )
-
 
 
 #Data Cleaning
@@ -541,7 +541,6 @@ data_page3=dmc.Container(
                                         ),
                                         dmc.Select(
                                             style={'marginTop':'20px'},
-                                            label='Scalling Type',
                                             description='Scalling Type',
                                             data=["Standardization", "Normalization"],
                                             searchable=True,

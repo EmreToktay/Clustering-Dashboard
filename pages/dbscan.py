@@ -40,25 +40,25 @@ layout = html.Div([
                     styles={'separator':{'margin':'0px'}},
                     children=[
                         dmc.StepperStep(
-                            label="Load Data",
-                            description="",
+                            label="First step",
+                            description="Load Data",
                             size='xs',
                             children=data_page1
                         ),
                         dmc.StepperStep(
-                            label="Data Cleaning",
-                            description="",
+                            label="Second step",
+                            description="Data Cleaning",
                             id='step2-ml2',
                             children=data_page2
                         ),
                         dmc.StepperStep(
-                            label="Model Building",
-                            description="",
+                            label="Third step",
+                            description="Model Building",
                             children=data_page3
                         ),
                         dmc.StepperStep(
-                            label="View Cluster",
-                            description="",
+                            label="Final step",
+                            description="View Cluster",
                             children=data_page4
                         ),
                         dmc.StepperCompleted(
@@ -161,13 +161,13 @@ dash.clientside_callback(
               Output('check1-ml2', 'value'),Output('table-data-ml2', 'children'),Output('table-data2-ml2', 'children'),
               Output('used-data-ml2', 'data', allow_duplicate=True),
               Input('upload-data-ml2', 'contents'),
-              Input('customer-ml2', 'n_clicks'),
-              Input('creditcard','n_clicks'),
-              Input('supermarket', 'n_clicks'),
+              Input('soil-mineral-ml2', 'n_clicks'),
+              Input('literacy-india-ml2','n_clicks'),
+              Input('hatecrime-india-ml2', 'n_clicks'),
               State('upload-data-ml2', 'filename'),
               prevent_initial_call=True
 )
-def update_output2(contents, customer, creditcard, supermarket, filename):
+def update_output2(contents, soil, literacy, hate, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data-ml2':
@@ -190,23 +190,24 @@ def update_output2(contents, customer, creditcard, supermarket, filename):
             return False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",no_update,no_update,no_update,no_update,'check', val, no_update, store_data
         else:
             return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
-    elif input_id =='customer-ml2':
-            df = pd.read_csv('assets/data/customer.csv')
+    elif input_id =='soil-mineral-ml2':
+            df = pd.read_csv('assets/data/soil.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'creditcard-ml2':
-            df = pd.read_csv('assets/data/creditcard.csv')
+    elif input_id == 'literacy-india-ml2':
+            df = pd.read_csv('assets/data/literacy.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'supermarket-ml2':
-            df = pd.read_csv('assets/data/supermarket.csv')
+    elif input_id == 'hatecrime-india-ml2':
+            df = pd.read_csv('assets/data/hate_crime.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
     else:
         raise PreventUpdate
+
 
 #CB4 -  populate all drowpdown
 dash.clientside_callback(
@@ -725,8 +726,7 @@ def pca_2d(click, columns, cluster, data):
         ch1['cluster'] = df[cluster]
         fig = px.scatter(ch1, x='var1', y='var2', color='cluster', category_orders={'cluster':[f'c-{x}' for x in np.arange(int(cluster.split('_')[-1]))]})
         fig.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor="#fff",
             font=dict(color='#999999'),
             height=500,
             margin=dict(t=0, l=0, r=0, b=0, pad=0,autoexpand=True),
@@ -756,8 +756,7 @@ def pca_3d(click, columns, cluster, data):
         ch1['cluster'] = df[cluster]
         fig = px.scatter_3d(ch1, x='var1', y='var2', z='var3', color='cluster', category_orders={'cluster':[f'c-{x}' for x in np.arange(int(cluster.split('_')[-1]))]})
         fig.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor="#fff",
             font=dict(color='#999999'),
             height=500,
             margin=dict(t=0, l=0, r=0, b=0, pad=0,autoexpand=True),

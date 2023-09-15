@@ -38,27 +38,35 @@ layout = html.Div([
                     size='xs',
                     contentPadding=1,
                     styles={'separator':{'margin':'0px'}},
+            children=[
+                dcc.Store(id='used-data', data=None, storage_type='session'),
+                dmc.Stepper(
+                    id="stepper-basic-usage",
+                    active=active,
+                    size='xs',
+                    contentPadding=1,
+                    styles={'separator':{'margin':'0px'}},
                     children=[
                         dmc.StepperStep(
-                            label="First step",
-                            description="Load Data",
+                            label="Load Data",
+                    
                             size='xs',
                             children=data_page1
                         ),
                         dmc.StepperStep(
-                            label="Second step",
-                            description="Data Cleaning",
-                            id='step2-ml2',
+                            label="Data Cleaning",
+                           
+                            id='step2',
                             children=data_page2
                         ),
                         dmc.StepperStep(
-                            label="Third step",
-                            description="Model Building",
+                            label="Model Building",
+ 
                             children=data_page3
                         ),
                         dmc.StepperStep(
-                            label="Final step",
-                            description="View Cluster",
+                            label="View Cluster",
+ 
                             children=data_page4
                         ),
                         dmc.StepperCompleted(
@@ -161,13 +169,13 @@ dash.clientside_callback(
               Output('check1-ml2', 'value'),Output('table-data-ml2', 'children'),Output('table-data2-ml2', 'children'),
               Output('used-data-ml2', 'data', allow_duplicate=True),
               Input('upload-data-ml2', 'contents'),
-              Input('soil-mineral-ml2', 'n_clicks'),
-              Input('literacy-india-ml2','n_clicks'),
-              Input('hatecrime-india-ml2', 'n_clicks'),
+              Input('customer-data-ml2', 'n_clicks'),
+              Input('creditcard-data-ml2','n_clicks'),
+              Input('supermarket-data-ml2', 'n_clicks'),
               State('upload-data-ml2', 'filename'),
               prevent_initial_call=True
 )
-def update_output2(contents, soil, literacy, hate, filename):
+def update_output2(contents, customer, creditcard, supermarket, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data-ml2':
@@ -190,18 +198,18 @@ def update_output2(contents, soil, literacy, hate, filename):
             return False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",no_update,no_update,no_update,no_update,'check', val, no_update, store_data
         else:
             return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
-    elif input_id =='soil-mineral-ml2':
-            df = pd.read_csv('assets/data/soil.csv')
+    elif input_id =='customer-data-ml2':
+            df = pd.read_csv('assets/data/customer.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'literacy-india-ml2':
-            df = pd.read_csv('assets/data/literacy.csv')
+    elif input_id == 'creditcard-data-ml2':
+            df = pd.read_csv('assets/data/creditcard.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'hatecrime-india-ml2':
-            df = pd.read_csv('assets/data/hate_crime.csv')
+    elif input_id == 'supermarket-data-ml2':
+            df = pd.read_csv('assets/data/supermarket.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data

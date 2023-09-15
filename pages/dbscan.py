@@ -161,12 +161,13 @@ dash.clientside_callback(
               Output('check1-ml2', 'value'),Output('table-data-ml2', 'children'),Output('table-data2-ml2', 'children'),
               Output('used-data-ml2', 'data', allow_duplicate=True),
               Input('upload-data-ml2', 'contents'),
-              Input('customer-data-ml2', 'n_clicks'),
-              Input('creditcard-data-ml2', 'n_clicks'),
+              Input('customer-ml2', 'n_clicks'),
+              Input('creditcard','n_clicks'),
+              Input('supermarket', 'n_clicks'),
               State('upload-data-ml2', 'filename'),
               prevent_initial_call=True
 )
-def update_output2(contents, customer_data, creditcard_data, filename):
+def update_output2(contents, customer, creditcard, supermarket, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data-ml2':
@@ -186,25 +187,26 @@ def update_output2(contents, customer_data, creditcard_data, filename):
             error_message = e
             
         if message == 'Done':
-            return (False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",
-                    no_update,no_update,no_update,no_update,'check', val, no_update, store_data)
+            return False, 'green', "Success!!, Table uploaded",f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows",no_update,no_update,no_update,no_update,'check', val, no_update, store_data
         else:
-            return (False, 'red', error_message," ", 
-                    no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update)
+            return False, 'red', error_message," ", no_update,no_update,no_update,no_update,'check', no_update, no_update,no_update
+    elif input_id =='customer-ml2':
+            df = pd.read_csv('assets/data/customer.csv')
+            val = create_table(df.iloc[:10, :6])
+            store_data = get_data_initial(df)
+            return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
+    elif input_id == 'creditcard-ml2':
+            df = pd.read_csv('assets/data/creditcard.csv')
+            val = create_table(df.iloc[:10, :6])
+            store_data = get_data_initial(df)
+            return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
+    elif input_id == 'supermarket-ml2':
+            df = pd.read_csv('assets/data/supermarket.csv')
+            val = create_table(df.iloc[:10, :6])
+            store_data = get_data_initial(df)
+            return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
     else:
-        if input_id == 'customer-data-ml2':
-            df = pd.read_csv('assets/data/Customer.csv')
-            val = create_table(df.iloc[:10, :6])
-            store_data = get_data_initial(df)
-        elif input_id == 'creditcard-data-ml2':
-            df = pd.read_csv('assets/data/Creditcard.csv')
-            val = create_table(df.iloc[:10, :6])
-            store_data = get_data_initial(df)
-        
-        return (no_update,no_update,no_update,no_update,False,'green','Data Loaded', 
-                f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',
-                no_update,val,store_data)
-
+        raise PreventUpdate
 
 #CB4 -  populate all drowpdown
 dash.clientside_callback(

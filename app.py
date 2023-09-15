@@ -113,10 +113,6 @@ app.layout = dmc.MantineProvider(
                                                         id='dbscan-drawer',
                                                         icon=get_icon(icon='carbon:edge-cluster')
                                             ),
-                                            dmc.NavLink(label="Hierarchical",
-                                                        href='/hierarchical',
-                                                        icon=get_icon(icon='carbon:edge-cluster')
-                                            ),
                                         ],
                                     ),
                                 ],

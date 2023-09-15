@@ -17,7 +17,6 @@ innerheadingsize=20
 
 
 
-#Load Data
 data_page1 = dmc.Container(
             style={'maxWidth':innerContainerWidth},
             className='container-ml',
@@ -41,7 +40,7 @@ data_page1 = dmc.Container(
                                                     style={
                                                         'lineHeight': '30px','borderWidth': '1px','borderStyle': 'dashed',
                                                         'borderRadius': '3px','borderColor':'rgba(0,0,0,0.3)','textAlign': 'center','margin': '5px',
-                                                        'padding':'20px', 'backgroundColor':'black'
+                                                        'padding':'20px', 'backgroundColor':'white'
                                                     },
                                                     children=[
                                                         dmc.Stack(
@@ -102,7 +101,6 @@ data_page1 = dmc.Container(
                                                             md=4,
                                                             children=[
                                                                 dmc.Card(
-                                                                    style={'backgroundColor': 'transparent'},
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
@@ -113,12 +111,13 @@ data_page1 = dmc.Container(
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Customer Data'
+                                                                                'Soil Mineral Content Across Different Districts of India'
                                                                             ]
                                                                         ),
-                                                                        dmc.Button('Get Data', mt=10,
+                                                                        dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='customer', variant='gradient', size='xs')                                                                    ]
+                                                                                   id='customer', variant='gradient', size='xs')
+                                                                    ]
                                                                 ),
                                                             ]
                                                         ),
@@ -127,7 +126,6 @@ data_page1 = dmc.Container(
                                                             md=4,
                                                             children=[
                                                                 dmc.Card(
-                                                                    style={'backgroundColor': 'transparent'},
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
@@ -138,7 +136,7 @@ data_page1 = dmc.Container(
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Credit Card Data'
+                                                                                'Literacy Rate Across Different Districts of India'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
@@ -148,6 +146,31 @@ data_page1 = dmc.Container(
                                                                 )
                                                             ]
                                                         ),
+                                                        dmc.Col(
+                                                            span=12,
+                                                            md=4,
+                                                            children=[
+                                                                dmc.Card(
+                                                                    children=[
+                                                                        dmc.CardSection(
+                                                                            dmc.Image(
+                                                                                src="assets/image/creditcard.jpg",
+                                                                                height=160,
+                                                                            )
+                                                                        ),
+                                                                        dmc.Text(
+                                                                            mt=10,
+                                                                            children=[
+                                                                                'Hate and Crime Across Different Districts of India'
+                                                                            ]
+                                                                        ),
+                                                                        dmc.Button('Get Data',mt=10,
+                                                                                   leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
+                                                                                   id='supermarket', variant='gradient', size='xs')
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        )
                                                     ]
                                                 ),
                                                 dmc.Alert( title="Success!", color="green", id='alert-check2',
@@ -175,6 +198,7 @@ data_page1 = dmc.Container(
                 )
             ]
         )
+
 
 
 #Data Cleaning

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Apr 23 01:32:08 2023
+Created on Thu Sep 14 01:11:24 2023
 
-@author: abhinav.kumar
+@author: Memre
 """
+
+
 from dash import html
 import plotly.graph_objects as go
 import numpy as np
@@ -36,7 +38,8 @@ def getheatmap(df, col='all', columns=[], title='Correlation Matrix'):
         xgap=1, ygap=1, colorscale=[[0, 'red'], [0.5, 'white'], [1, 'green']], zmid=0, zmin=-1, zmax=1#[[0,'white'], [1, 'green']]
     ))
     fig.update_layout(
-        plot_bgcolor="#fff",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
         font=dict(color='#999999'),
         height=height,
         title="",
@@ -56,8 +59,9 @@ def getheatmap(df, col='all', columns=[], title='Correlation Matrix'):
 def gethistogram(data, columns=[]):
     fig = px.histogram(data, x=columns, marginal='box')
     fig.update_layout(
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
             barmode='overlay',
-            plot_bgcolor="#fff",
             font=dict(color='#999999'),
             height=500,
             title="",
@@ -73,7 +77,8 @@ def gethist2d_fig(data, columns, title):
                          text_auto=True
                         )
     fig.update_layout(
-            plot_bgcolor="#fff",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='#999999'),
             height=500,
             title=title,
@@ -87,7 +92,8 @@ def getscatter_fig(data, columns, title):
     fig = px.scatter_matrix(data,dimensions=columns)
     fig.update_traces(showupperhalf=False, diagonal_visible=False)
     fig.update_layout(
-            plot_bgcolor="#fff",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='#999999'),
             height=500,
             title='',
@@ -114,7 +120,9 @@ def getelbow(data, value, n_cluster):
 
     fig = px.line(y=inertia, x=np.arange(1, len(inertia)+1))
     fig.update_traces(mode='lines+markers')
-    fig.update_layout(plot_bgcolor='white')
+    fig.update_layout(          
+                      plot_bgcolor='rgba(0,0,0,0)',
+                      paper_bgcolor='rgba(0,0,0,0)')
     fig.update_yaxes(title='WCSS')
     fig.update_xaxes(title='Cluster')
     return fig
@@ -154,7 +162,8 @@ def create_model(data, value, stander):
 
 def blank_fig():
     fig = go.Figure(go.Scatter(x=[], y = []))
-    fig.update_layout(template = None)
+    fig.update_layout(template = None, plot_bgcolor='rgba(0,0,0,0)',
+                paper_bgcolor='rgba(0,0,0,0)')
     fig.update_xaxes(showgrid = False, showticklabels = False, zeroline=False)
     fig.update_yaxes(showgrid = False, showticklabels = False, zeroline=False)
     
@@ -197,7 +206,8 @@ def get_data_initial(df):
 def getboxplot(df,cluster, var, title='Correlation Matrix'):
     fig = px.box(df, x=cluster, y=var)
     fig.update_layout(
-        plot_bgcolor="#fff",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
         font=dict(color='#999999'),
         height=500,
         title=title,
@@ -211,7 +221,8 @@ def getscatterplot(data, columns, cluster, title):
     fig = px.scatter_matrix(data,dimensions=columns, color=cluster, category_orders={cluster:[f'c-{x}' for x in np.arange(int(cluster.split('_')[-1]))]})
     fig.update_traces(showupperhalf=False, diagonal_visible=False)
     fig.update_layout(
-            plot_bgcolor="#fff",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='#999999'),
             height=500,
             title=title,
@@ -226,7 +237,8 @@ def get3dscatterplot(data, columns, cluster, title):
     x, y, z = columns
     fig = px.scatter_3d(data,x=x,y=y,z=z, color=cluster, category_orders={cluster:[f'c-{x}' for x in np.arange(int(cluster.split('_')[-1]))]})
     fig.update_layout(
-            plot_bgcolor="#fff",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='#999999'),
             height=500,
             title=title,
@@ -246,7 +258,8 @@ def getfeature_importance(data, cluster):
     importance = importance.sort_values('importance')
     fig = px.bar(importance, y='Feature', x='importance', orientation='h')
     fig.update_layout(
-        plot_bgcolor="#fff",
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
         font=dict(color='#999999'),
         height=500,
         margin=dict(t=0, l=0, r=0, b=10, pad=0,autoexpand=True),

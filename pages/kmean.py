@@ -29,17 +29,9 @@ active = 0
 layout = html.Div([
         
         dmc.Container(
-            style={'backgroundColor':'whitesmoke','marginTop':'0.2rem','padding':'1rem',
+            style={'backgroundColor':'silver','marginTop':'0.2rem','padding':'1rem',
                    'minHeight':'100vh', 'maxWidth':'1200px'},
             className='container-ml',
-            children=[
-                dcc.Store(id='used-data', data=None, storage_type='session'),
-                dmc.Stepper(
-                    id="stepper-basic-usage",
-                    active=active,
-                    size='xs',
-                    contentPadding=1,
-                    styles={'separator':{'margin':'0px'}},
             children=[
                 dcc.Store(id='used-data', data=None, storage_type='session'),
                 dmc.Stepper(

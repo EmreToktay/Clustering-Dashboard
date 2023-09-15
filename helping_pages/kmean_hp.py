@@ -105,14 +105,14 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/soil.jpg",
+                                                                                src="assets/image/customer.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Customer data for Clustering'
+                                                                                'Shopping Customer Data'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
@@ -130,7 +130,7 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/literacy.jpg",
+                                                                                src="assets/image/creditcard.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),

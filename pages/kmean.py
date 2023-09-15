@@ -40,27 +40,35 @@ layout = html.Div([
                     size='xs',
                     contentPadding=1,
                     styles={'separator':{'margin':'0px'}},
+            children=[
+                dcc.Store(id='used-data', data=None, storage_type='session'),
+                dmc.Stepper(
+                    id="stepper-basic-usage",
+                    active=active,
+                    size='xs',
+                    contentPadding=1,
+                    styles={'separator':{'margin':'0px'}},
                     children=[
                         dmc.StepperStep(
-                            label="First step",
-                            description="Load Data",
+                            label="Load Data",
+                    
                             size='xs',
                             children=data_page1
                         ),
                         dmc.StepperStep(
-                            label="Second step",
-                            description="Data Cleaning",
+                            label="Data Cleaning",
+                           
                             id='step2',
                             children=data_page2
                         ),
                         dmc.StepperStep(
-                            label="Third step",
-                            description="Model Building",
+                            label="Model Building",
+ 
                             children=data_page3
                         ),
                         dmc.StepperStep(
-                            label="Final step",
-                            description="View Cluster",
+                            label="View Cluster",
+ 
                             children=data_page4
                         ),
                         dmc.StepperCompleted(

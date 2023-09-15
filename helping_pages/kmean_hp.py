@@ -112,12 +112,12 @@ data_page1 = dmc.Container(
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Soil Mineral Content Across Different Districts of India'
+                                                                                'Customer data for clustering'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='soil-mineral', variant='gradient', size='xs')
+                                                                                   id='customer-data', variant='gradient', size='xs')
                                                                     ]
                                                                 ),
                                                             ]

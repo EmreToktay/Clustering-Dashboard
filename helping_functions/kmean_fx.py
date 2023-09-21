@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 14 01:11:24 2023
+Created on Thu Sep 10 03:42:54 2023
 
 @author: Memre
 """
@@ -108,14 +108,19 @@ def getelbow(data, value, n_cluster):
     df = pd.DataFrame(data['table'])[columns]
     df.dropna(inplace=True)
     
+    # Scaler'ı sadece bir kez oluşturma
     if value == 'MinMax':
-        df = preprocessing.MinMaxScaler().fit_transform(df)
+        scaler = preprocessing.MinMaxScaler()
     else:
-        df = preprocessing.StandardScaler().fit_transform(df)
+        scaler = preprocessing.StandardScaler()
+    df = scaler.fit_transform(df)
+    
     inertia = [] 
-    for i in range(1, n_cluster+1): 
-        kmeans = KMeans(n_clusters = i, init = 'k-means++', random_state = 2023)
-        kmeans.fit(df) 
+    kmeans = KMeans(init='k-means++', random_state=2023)
+    
+    for i in range(1, n_cluster+1):
+        kmeans.set_params(n_clusters=i)
+        kmeans.fit(df)
         inertia.append(kmeans.inertia_)
 
     fig = px.line(y=inertia, x=np.arange(1, len(inertia)+1))
@@ -125,6 +130,7 @@ def getelbow(data, value, n_cluster):
                       paper_bgcolor='rgba(0,0,0,0)')
     fig.update_yaxes(title='WCSS')
     fig.update_xaxes(title='Cluster')
+    
     return fig
 
 def create_model(data, value, stander):

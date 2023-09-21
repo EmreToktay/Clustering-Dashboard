@@ -168,21 +168,15 @@ app.layout = dmc.MantineProvider(
                                                 children=[
                                                     dmc.MediaQuery([
                                                       dmc.Text([
-                                                                dmc.Anchor("Mehmet Emre Toktay",href="memretoktay.net",
+                                                                dmc.Anchor("",href="",
                                                                         target="_blank", style={'textDecoration': 'none', 'color':'#457b9d'})
                                                       ], align='center', color="#a8dadc", weight=700)
                                                     ], smallerThan='xs', styles={'fontSize':12}),  
  
                                                     html.A(
-                                                        dmc.Avatar(DashIconify(icon="mdi:linkedin", width=15, color="#a8dadc"),#'#0a66c2'
-                                                            size="xs",radius="xs"),
-                                                    href="https://www.linkedin.com/in/memretoktay",
-                                                    target="_blank",
-                                                    ),
-                                                    html.A(
                                                         dmc.Avatar(DashIconify(icon="mdi:github", width=15, color="#a8dadc"),#'#24292f'
                                                             size="xs",radius="xs"),
-                                                    href="https://github.com/EmreToktay",
+                                                    href="https://github.com/EmreToktay/Clustering-Dashboard",
                                                     target="_blank",
                                                     )
                                                 ], spacing='xs', position='right'
@@ -247,9 +241,7 @@ dash.clientside_callback(
       if (url === '/kmean') {
         return "KMean";
       } else if (url === '/dbscan') {
-        return "DBScan";
-      } else if (url === '/hierarchical') {
-        return 'Hierarchical'    
+        return "DBScan";   
       } else {
         return ""
      }

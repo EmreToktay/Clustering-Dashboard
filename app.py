@@ -42,7 +42,7 @@ app.layout = dmc.MantineProvider(
                 hidden=True,
                 hiddenBreakpoint='md',
                 position='right',
-                height='100vh',
+                height='400vh',
                 id='sidebar',
                 children=[
                     html.Div(

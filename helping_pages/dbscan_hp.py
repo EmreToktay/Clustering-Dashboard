@@ -154,19 +154,19 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/hate.jpg",
+                                                                                src="assets/image/creditcard.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Supermarket  data'
+                                                                                'Creditcard Data from Bank FullSize'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='supermarket-data-ml2', variant='gradient', size='xs')
+                                                                                   id='creditcardorg-data-ml2', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]

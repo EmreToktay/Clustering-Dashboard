@@ -155,19 +155,19 @@ data_page1 = dmc.Container(
                                                                     children=[
                                                                         dmc.CardSection(
                                                                             dmc.Image(
-                                                                                src="assets/image/hate.jpg",
+                                                                                src="assets/image/creditcard.jpg",
                                                                                 height=160,
                                                                             )
                                                                         ),
                                                                         dmc.Text(
                                                                             mt=10,
                                                                             children=[
-                                                                                'Supermarket data for clustering'
+                                                                                'Creditcard Data from Bank FullSize'
                                                                             ]
                                                                         ),
                                                                         dmc.Button('Get Data',mt=10,
                                                                                    leftIcon=DashIconify(icon="fluent:database-plug-connected-20-filled"),
-                                                                                   id='supermarket-data', variant='gradient', size='xs')
+                                                                                   id='creditcardorg-data', variant='gradient', size='xs')
                                                                     ]
                                                                 )
                                                             ]
@@ -577,7 +577,7 @@ data_page3=dmc.Container(
                                         dmc.NumberInput(
                                             label="Select Cluster",
                                             description='WCSS will be calculated on these cluster',
-                                            value=10,
+                                            value=8,
                                             min=1,
                                             step=1,
                                             icon=DashIconify(icon='carbon:assembly-cluster'),

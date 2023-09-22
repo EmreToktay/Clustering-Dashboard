@@ -163,7 +163,7 @@ dash.clientside_callback(
               Input('upload-data-ml2', 'contents'),
               Input('customer-data-ml2', 'n_clicks'),
               Input('creditcard-data-ml2','n_clicks'),
-              Input('supermarket-data-ml2', 'n_clicks'),
+              Input('creditcardorg-data-ml2', 'n_clicks'),
               State('upload-data-ml2', 'filename'),
               prevent_initial_call=True
 )
@@ -200,8 +200,8 @@ def update_output2(contents, customer, creditcard, supermarket, filename):
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data
-    elif input_id == 'supermarket-data-ml2':
-            df = pd.read_csv('assets/data/supermarket.csv')
+    elif input_id == 'creditcardorg-data-ml2':
+            df = pd.read_csv('assets/data/creditcardorg.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
             return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data

@@ -164,11 +164,11 @@ dash.clientside_callback(
               Input('upload-data', 'contents'),
               Input('customer-data', 'n_clicks'),
               Input('creditcard-data','n_clicks'),
-              Input('supermarket-data', 'n_clicks'),
+              Input('creditcardorg-data', 'n_clicks'),
               State('upload-data', 'filename'),
               prevent_initial_call=True
 )
-def update_output(contents, customer, creditcard, supermarket, filename):
+def update_output(contents, customer, creditcard, creditcardorg, filename):
     ctx = dash.callback_context
     input_id = ctx.triggered[0]['prop_id'].split('.')[0]
     if input_id == 'upload-data':
@@ -200,8 +200,8 @@ def update_output(contents, customer, creditcard, supermarket, filename):
             df = pd.read_csv('assets/data/creditcard.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
-        elif input_id == 'supermarket-data':
-            df = pd.read_csv('assets/data/supermarket.csv')
+        elif input_id == 'creditcardorg-data':
+            df = pd.read_csv('assets/data/creditcardorg.csv')
             val = create_table(df.iloc[:10, :6])
             store_data = get_data_initial(df)
         return no_update,no_update,no_update,no_update,False,'green','Data Loaded', f"Having Rows - {df.shape[0]} and Columns - {df.shape[1]}. Showing first 10 rows", '',no_update,val,store_data

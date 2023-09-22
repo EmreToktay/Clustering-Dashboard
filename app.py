@@ -90,7 +90,7 @@ app.layout = dmc.MantineProvider(
                 id="page-container2",
                 p=0,
                 fluid=True,
-                style={'backgroundColor': '#c2c7d0', 'width': '100%', 'margin': '0'},
+                style={'backgroundColor': '#f4f6f9', 'width': '100%', 'margin': '0'},
                 children=[
                     dmc.Header(
                         height=50,
@@ -136,6 +136,8 @@ app.layout = dmc.MantineProvider(
 
 
 
+        
+
 
 
 
@@ -176,4 +178,4 @@ dash.clientside_callback(
 )
 
 if __name__ == '__main__':
-	app.run_server(debug=True, port=8067)
+	app.run_server(debug=True, port=8050)

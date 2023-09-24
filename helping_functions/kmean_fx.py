@@ -14,6 +14,7 @@ import pandas as pd
 from sklearn import preprocessing
 from sklearn.cluster import KMeans
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
 
 def create_table(df, textalign='center', minwidth='100px'):
     columns, values = df.columns, df.values
@@ -271,3 +272,18 @@ def getfeature_importance(data, cluster):
         margin=dict(t=0, l=0, r=0, b=10, pad=0,autoexpand=True),
       )
     return fig
+
+
+def quality_check(data, cluster):
+    cols = [i['row'] for i in data['model_selection']]
+    df = pd.DataFrame(data['cluster_data'])
+    y = df.loc[:, cluster]
+    X = df.loc[:, cols]
+    
+    # Skorları hesapla
+    silhouette_coeff = silhouette_score(X, y)
+    calinski_harabasz_idx = calinski_harabasz_score(X, y)
+    davies_bouldin_idx = davies_bouldin_score(X, y)
+    
+    return silhouette_coeff, calinski_harabasz_idx, davies_bouldin_idx
+

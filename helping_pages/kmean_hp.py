@@ -672,7 +672,53 @@ data_page3=dmc.Container(
                                     ]
                                 )
                             ]
-                        )
+                        ),
+                        dmc.AccordionItem(
+                            value='quality-check',
+                            children=[
+                                dmc.AccordionControl("Clustering Quality", icon=DashIconify(icon="material-symbols:app-registration")),
+                                dmc.AccordionPanel(
+                                    style={'padding':'10px 20px 10px 20px'}, 
+                                    children=[
+                                        html.P(
+                                            """Silhouette Coefficient: Measure of how similar an object is to its own cluster compared to other clusters. """
+                                            "Good if near 1, bad if near -1, overlapping clusters if near 0.",
+                                            style={'fontSize': '11px', 'color': '#333', 'fontWeight': 'bold'}
+                                        ),
+                                        html.P(
+                                            """Calinski-Harabasz Index: Ratio of the sum of between-clusters dispersion to of inter-cluster dispersion. """
+                                            "Higher values are better.",
+                                            style={'fontSize': '11px', 'color': '#333', 'fontWeight': 'bold'}
+                                        ),
+                                        html.P(
+                                            """Davies-Bouldin Index: The average similarity measure of each cluster with its most similar cluster. """
+                                            "Good if near 0, bad if high.",
+                                            style={'fontSize': '11px', 'color': '#333', 'fontWeight': 'bold'}
+                                        ),
+                                        html.P(
+                                            """Note: These metrics are relative indicators and do not provide absolute truths. They should be used """
+                                            "as guidance alongside other analysis methods.",
+                                            style={'fontSize': '10px', 'color': '#333'}
+                                        ),
+                                        dmc.Select(
+                                            style={'marginTop':'20px'},
+                                            description='Select Cluster',
+                                            searchable=True,
+                                            nothingFound="No options found",
+                                            id='quality-metrics-clusters',
+                                            icon = DashIconify(icon="uil:scaling-right")
+                                        ),
+                                        dmc.Button('Compute Quality Metrics', id='compute-quality-metrics',
+                                                   leftIcon=DashIconify(icon="clarity:process-on-vm-line"),
+                                                   variant='gradient', style={'margin':'10px', 'width':'100%'}),
+                                        html.Div(
+                                            id='quality-metrics-table',
+                                            style={'margin-top': '10px'}
+                                        )
+                                    ]
+                                )
+                            ]
+                        ),
                     ]
                 )
             ]

@@ -17,7 +17,8 @@ import numpy as np
 from sklearn.decomposition import PCA
 import plotly.express as px
 from helping_pages.kmean_hp import data_page1, data_page2, data_page3, data_page4
-from helping_functions.kmean_fx import get_data_initial, create_table, getheatmap,gethistogram,gethist2d_fig, getscatter_fig, getelbow, create_model, getboxplot, getscatterplot, get3dscatterplot, getfeature_importance
+from helping_functions.kmean_fx import quality_check, get_data_initial, create_table, getheatmap,gethistogram,gethist2d_fig, getscatter_fig, getelbow, create_model, getboxplot, getscatterplot, get3dscatterplot, getfeature_importance
+import dash_table
 
 
 dash.register_page(__name__)
@@ -612,6 +613,56 @@ def populate_select_feature_importance(click, value):
 def generate_surrogacy(n_nlicks, data, cluster):
     fig = getfeature_importance(data, cluster)
     return fig
+
+@dash.callback(
+    Output('quality-metrics-clusters', 'data'),  
+    Input('compute-model', 'n_clicks'),  
+    State('num-cluster', 'value'),
+    prevent_initial_call=True
+)
+def populate_select_quality_metrics(click, value):
+    return [f'cluster_{i}' for i in value]
+
+#CB28
+@dash.callback(
+    Output('quality-metrics-table', 'children'),  # 'children' özelliğini kullanın
+    Input('compute-quality-metrics', 'n_clicks'),
+    State('used-data', 'data'),  
+    State('quality-metrics-clusters', 'value'),
+    prevent_initial_call=True
+)
+def compute_quality_metrics(n_clicks, data, cluster):
+    if isinstance(data, dict) and 'cluster_data' in data and 'model_selection' in data:
+        silhouette_coeff, calinski_harabasz_idx, davies_bouldin_idx = quality_check(data, cluster)
+        
+        # Sayıları biçimlendir
+        silhouette_coeff = "{:.2f}".format(silhouette_coeff)
+        calinski_harabasz_idx = "{:.2f}".format(calinski_harabasz_idx)
+        davies_bouldin_idx = "{:.2f}".format(davies_bouldin_idx)
+    else:
+        # Eğer veri yoksa veya yanlış formattaysa, tüm metrikleri 'N/A' olarak ayarla
+        silhouette_coeff, calinski_harabasz_idx, davies_bouldin_idx = 'N/A', 'N/A', 'N/A'
+
+    # DataFrame oluştur
+    scores_df = pd.DataFrame({
+        'Metric': ['Silhouette Coefficient', 'Calinski-Harabasz Index', 'Davies-Bouldin Index'],
+        'Score': [silhouette_coeff, calinski_harabasz_idx, davies_bouldin_idx]
+    })
+
+    # DataTable bileşenini oluştur
+    table = dash_table.DataTable(
+        columns=[{"name": i, "id": i} for i in scores_df.columns],
+        data=scores_df.to_dict('records'),
+        style_table={'height': '200px', 'overflowY': 'auto'},
+        style_cell={'textAlign': 'left', 'minWidth': '100px', 'width': '100px', 'maxWidth': '100px'},
+        style_header={
+            'backgroundColor': 'rgb(230, 230, 230)',
+            'fontWeight': 'bold'
+        }
+    )
+
+    return table  # Tabloyu döndür, veri olsun ya da olmasın
+
     
     
 #CB17 - populate dropdown cluster view page

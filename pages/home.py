@@ -13,9 +13,11 @@ import dash_mantine_components as dmc
 dash.register_page(__name__, path='/')
 
 intro_text = """
-Welcome to my data visualization domain with Python, thanks to Plotly and Dash. Due to the RAM and CPU limitations of the platform where I published, there might be initial delays in loading and processing times. If you wish, you can follow the steps listed below to run it locally.
+Welcome to my domain of data visualization using Python, powered by Plotly and Dash. This dashboard is designed to automate my customer clustering analysis. It's worth giving Dash a try. Essentially, in the clustering segment, I follow a structured process, subsequently developing an app to automate these steps. Moreover, this app provides the feature to export the clustered data back for further use. For more insights into this, feel free to explore this article: [Check this article](https://memretoktay.net/Blog%20Posts/plotly.html).
 
-Additionally, due to the large size of the datasets, I was able to upload only 10% slices of them; otherwise, the platform's RAM capacity is insufficient and processing becomes unfeasible. Links to the original datasets: [https://www.kaggle.com/datasets/datascientistanna/customers-dataset]. As a third option for the dataset, I included the full data file creditcard.csv. If you feel lucky, try to run it—sometimes it works :) Also, if you wish to upload your own data, please keep this information in mind.
+Please note that due to the resource constraints of the hosting platform, such as RAM and CPU limitations, there might be some initial lag in loading and processing times. However, if preferred, you can follow the outlined steps below to run the dashboard locally on your machine.
+
+Moreover, owing to the substantial size of the datasets, I could only upload 10% slices of each; the full dataset exceeds the platform's RAM capacity, making the processing impractical. Here are the links to the original datasets: [Original Datasets](https://www.kaggle.com/datasets/datascientistanna/customers-dataset). As an alternate data option, I've also included the complete data file `creditcard.csv`. If you're feeling adventurous, give it a spin—sometimes it works smoothly. And if you wish to upload your own dataset for analysis, please bear this information in mind.
 """
 
 instructions = """

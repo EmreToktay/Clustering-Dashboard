@@ -577,7 +577,7 @@ data_page3=dmc.Container(
                                         dmc.NumberInput(
                                             label="Select Cluster",
                                             description='WCSS will be calculated on these cluster',
-                                            value=8,
+                                            value=5,
                                             min=1,
                                             step=1,
                                             icon=DashIconify(icon='carbon:assembly-cluster'),

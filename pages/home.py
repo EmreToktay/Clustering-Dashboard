@@ -17,7 +17,7 @@ Welcome to my domain of data visualization using Python, powered by Plotly and D
 Essentially, in the clustering segment, I follow a structured process, subsequently developing an app to automate [these steps](https://memretoktay.net/Blog%20Posts/plotly.html). Moreover,
 this app provides the feature to export the clustered data back for further use.
 
-About Dashboard i mainly focused on K-Means section due to best results for creditcard data set at Clustering Analyze. DBscan still need some improvements and didnt start for optics at all. They are now at my do list (good luck for them).
+In the Dashboard, I primarily focused on the *K-Means* section due to its superior results for the credit card dataset in clustering analysis. DBscan still needs some improvements, and I haven't started on Optics at all. They are now on my to-do list (good luck to them).
 
 Please note that due to the resource constraints of the hosting platform, such as RAM and CPU limitations, there might be some initial lag in loading and processing times. However,
 if preferred, you can follow the outlined steps below to run the dashboard locally on your machine.

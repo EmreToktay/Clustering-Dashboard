@@ -14,7 +14,7 @@ def get_icon(icon):
     return DashIconify(icon=icon, height=16, color="#c2c7d0")
 
 
-app = Dash(__name__, 
+app = Dash(__name__,
            use_pages=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP],
            meta_tags=[
@@ -42,7 +42,7 @@ app.layout = dmc.MantineProvider(
                 hidden=True,
                 hiddenBreakpoint='md',
                 position='right',
-                height='400vh',
+                height='110vh',
                 id='sidebar',
                 children=[
                     html.Div(
@@ -136,7 +136,7 @@ app.layout = dmc.MantineProvider(
 
 
 
-        
+
 
 
 
@@ -158,7 +158,7 @@ dash.clientside_callback(
     State('sidebar2','width')
 )
 
-          
+
 dash.clientside_callback(
     """
 
@@ -167,7 +167,7 @@ dash.clientside_callback(
       if (url === '/kmean') {
         return "KMean";
       } else if (url === '/dbscan') {
-        return "DBScan";   
+        return "DBScan";
       } else {
         return ""
      }
